@@ -1,0 +1,9 @@
+# Copyright (c) 2024 Stefan Giggenbach (https://github.com/mastergiggi)
+# SPDX-License-Identifier: Apache-2.0
+
+build:
+  # Path to the Kconfig file relative to the repository root
+  kconfig: Kconfig
+  # Path to the directory containing the entry point
+  # CMakeLists.txt file relative to the repository root
+  cmake: .

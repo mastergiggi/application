@@ -1,0 +1,7 @@
+# Copyright (c) 2024 Stefan Giggenbach (https://github.com/mastergiggi)
+# SPDX-License-Identifier: Apache-2.0
+
+config LIB_OSAL
+	bool "Operating System Abstraction Layer (OSAL) support"
+	help
+	  This option enables the OSAL library (C++17 required)

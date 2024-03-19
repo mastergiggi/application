@@ -1,0 +1,13 @@
+# Copyright (c) 2024 Stefan Giggenbach (https://github.com/mastergiggi)
+# SPDX-License-Identifier: Apache-2.0
+#
+# Kconfig entry point defined in zephyr/module.yml
+#
+# Modify options using
+#   west build -t menuconfig app
+# from repository root directory.
+#
+# To use (external) modules (e.g. LittleFS, mbedtls, etc.) add them
+# to west.yml --> manifest --> projects --> import --> name-allowlist
+
+rsource "lib/Kconfig"

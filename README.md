@@ -29,21 +29,36 @@ library in another project. In this project I started using the Zephyr
 project's example application and modified it to provide the usage of a OSAL
 library.
 
-The first step is to initialize a zephyr workspace using west:
+### Prerequisites
+
+Make sure to install the Zephyr SDK according to the documentation:
+https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-the-zephyr-sdk
+
+### Setup python virtual environment and install west
 
 ```shell
-# initialize zephyr-workspace and use this project as manifest repository (T2 topology)
-west init -m https://github.com/mastergiggi/osal-zephyr --mr main zephyr-workspace
-# update Zephyr modules
-cd zephyr-workspace
-west update
+cd ~
+mkdir zephyr-workspace
+python -m venv zephyr-workspace/.venv
+source zephyr-workspace/.venv/bin/activate
+pip install west
 ```
 
-To build the OSAL example application use the command:
+### Initialize, update and install requirements for Zephyr workspace
 
 ```shell
-cd osal-zephyr
-west build -p auto -b $BOARD app
+cd ~/zephyr-workspace
+west init -m git@github.com:mastergiggi/osal-zephyr .
+west update
+west zephyr-export
+pip install -r zephyr/scripts/requirements.txt
+```
+
+### Build the OSAL example application use the command
+
+```shell
+cd application/
+west build -p auto -b $BOARD osal-example/
 ```
 
 where `$BOARD` is the target board (e.g. `native_sim` or `nucleo_f303re`).

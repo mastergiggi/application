@@ -34,7 +34,7 @@ library.
 Make sure to install the Zephyr SDK according to the documentation:
 https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-the-zephyr-sdk
 
-### Setup python virtual environment and install west
+### Setup Python virtual environment and install west
 
 ```shell
 cd ~
@@ -44,17 +44,23 @@ source zephyr-workspace/.venv/bin/activate
 pip install west
 ```
 
-### Initialize, update and install requirements for Zephyr workspace
+### Clone repository and initialize Zephyr workspace
 
 ```shell
 cd ~/zephyr-workspace
-west init -m git@github.com:mastergiggi/osal-zephyr .
+git clone git@github.com:mastergiggi/application.git
+west init -l --mf application/west.yml application/
 west update
 west zephyr-export
+```
+
+### Install Python packages
+
+```shell
 pip install -r zephyr/scripts/requirements.txt
 ```
 
-### Build the OSAL example application use the command
+### Build the OSAL example application using the command
 
 ```shell
 cd application/

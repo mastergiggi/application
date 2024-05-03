@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "GDB Launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/build/zephyr/zephyr.exe",
+            "request": "launch",
+            "type": "cppdbg",
+            "preLaunchTask": "West Build"
+        }
+    ]
+}

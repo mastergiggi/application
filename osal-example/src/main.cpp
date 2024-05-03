@@ -13,7 +13,7 @@ static void myThreadFunction()
 {
 	while (true) {
 		printk("%s: Hello World!\n", __FUNCTION__);
-		OS::Thread::sleep(5);
+		OS::Thread::msleep(500);
 	}
 }
 
@@ -34,7 +34,7 @@ int main(void)
 	while (count < 5) {
 		printk("%s: Hello World!\n", __FUNCTION__);
 		++count;
-		OS::Thread::msleep(1000);
+		OS::Thread::sleep(1);
 	}
 
 	myThread.abort();

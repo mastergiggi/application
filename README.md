@@ -19,28 +19,29 @@ https://herbsutter.com/gotw/_100/
 https://herbsutter.com/gotw/_101/
 
 I want to implement an operating system abstraction layer using this idiom and
-port it for various embedded (real-time) operating systems like FreeRTOS, MS
-Azure RTOS and the Zephyr project's RTOS kernel.
+port it for various embedded (real-time) operating systems like FreeRTOS,
+Eclipse ThreadX and the Zephyr project's RTOS kernel.
 
 ## Implementation and usage
 
 I have already implemented a first prototype using the C++17 thread support
 library in another project. In this project I started using the Zephyr
-project's example application and modified it to provide the usage of a OSAL
+project's example application and modified it to provide the usage of an OSAL
 library.
 
 ### Prerequisites
 
-Make sure to install the Zephyr SDK according to the documentation:
-https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-the-zephyr-sdk
+Make sure to install all the dependencies (incl. Python virtual environment)
+according to the documentation:
+https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-dependencies
 
 ### Setup Python virtual environment and install west
 
 ```shell
 cd ~
 mkdir zephyr-workspace
-python -m venv zephyr-workspace/.venv
-source zephyr-workspace/.venv/bin/activate
+python -m venv ~/zephyr-workspace/.venv
+source ~/zephyr-workspace/.venv/bin/activate
 pip install west
 ```
 
@@ -49,7 +50,7 @@ pip install west
 ```shell
 cd ~/zephyr-workspace
 git clone git@github.com:mastergiggi/application.git
-west init -l --mf application/west.yml application/
+west init -l --mf west.yml application/
 west update
 west zephyr-export
 ```
@@ -79,4 +80,17 @@ where `$BOARD` is the target board (e.g. `native_sim` or `nucleo_g431rb`).
 
 ### Development using Visual Studio Code
 
-See `/application/ide/vscode/README.md` for details.
+#### Copy json files
+
+```shell
+mkdir ~/zephyr-workspace/.vscode
+cp ~/zephyr-workspace/application/ide/vscode/* ~/zephyr-workspace/.vscode
+```
+
+#### Build task
+
+Press [CTRL] + [SHIFT] + [B] to start west build using the `native_sim` board.
+
+#### Debug launch
+
+Press [CTRL] + [SHIFT] + [D] and select `Launch Native`.

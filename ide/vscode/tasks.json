@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "West Build",
+			"label": "West Build Native",
 			"type": "shell",
 			"group": {
 				"kind": "build",
@@ -23,7 +23,35 @@
 				"auto",
 				"-b",
 				"native_sim",
-				"application/osal-example/"
+				"application/osal-example"
+			],
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "West Build Nucleo-G431RB",
+			"type": "shell",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"linux": {
+				"command": "${workspaceFolder}/.venv/bin/west"
+			},
+			"windows": {
+				"command": "${workspaceFolder}/.venv/Scripts/west.exe"
+			},
+			"osx": {
+				"command": "${workspaceFolder}/.venv/bin/west"
+			},
+			"args": [
+				"build",
+				"-p",
+				"auto",
+				"-b",
+				"nucleo_431rb",
+				"application/osal-example"
 			],
 			"problemMatcher": [
 				"$gcc"
@@ -50,7 +78,7 @@
 				"${input:pristine}",
 				"-b",
 				"${input:board}",
-				"application/osal-example/"
+				"${input:application}"
 			],
 			"problemMatcher": [
 				"$gcc"
@@ -78,10 +106,25 @@
 	],
 	"inputs": [
 		{
+			"id": "pristine",
+			"type": "pickString",
+			"description": "Choose when to run a pristine build",
+			"default": "auto",
+			"options": [
+				"auto",
+				"always",
+				"never"
+			]
+		},
+		{
 			"id": "board",
-			"type": "promptString",
-			"default": "native_sim",
-			"description": "See https://docs.zephyrproject.org/latest/boards/index.html"
+			"type": "pickString",
+			"description": "See https://docs.zephyrproject.org/latest/boards/index.html",
+			"default": "nucleo_g431rb",
+			"options": [
+				"nucleo_g431rb",
+				"native_sim"
+			]
 		},
 		{
 			"id": "pristine",
@@ -93,6 +136,12 @@
 				"always",
 				"never"
 			]
+		},
+		{
+			"id": "application",
+			"type": "promptString",
+			"default": "application/osal-example",
+			"description": "Path to application directory"
 		}
 	]
 }

@@ -3,30 +3,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <cassert>
 #include <memory>
 
-#include <osal/os-thread.hpp>
-
 #include <zephyr/kernel.h>
+#include <osal/os-thread.hpp>
 
 #include "pimpl-impl.hpp"
 
 class OS::Thread::impl
 {
 private:
-    static void threadCallback(void* param)
+    static void threadEntry(void* param)
     {
-        assert(param != nullptr);
+        __ASSERT(param != nullptr, "Invalid thread object!");
         OS::Thread::impl* me = static_cast<OS::Thread::impl*>(param);
-        me->_function();
+        me->threadFunction();
     }
 
 public:
     impl() = default;
 
     impl(OS::Thread::Function function, const OS::Thread::Config& config, const bool autostart)
-        : _function(function)
+        : threadFunction(function)
     {
 #ifdef CONFIG_USERSPACE
         int flags = K_USER;
@@ -36,45 +34,45 @@ public:
 
         const k_timeout_t delay = autostart ? K_NO_WAIT : K_FOREVER;
         
-        _threadStack = k_thread_stack_alloc(config.stackSize, flags);
-        assert(_threadStack != nullptr);
-        _threadId = k_thread_create(&_thread, _threadStack, config.stackSize,
-			                        (k_thread_entry_t) threadCallback,
+        threadStack = k_thread_stack_alloc(config.stackSize, flags);
+        __ASSERT(threadStack != nullptr, "Thread stack allocation failed!");
+        threadId = k_thread_create(&thread, threadStack, config.stackSize,
+			                        (k_thread_entry_t) threadEntry,
 			                        (void*) this, NULL, NULL, K_PRIO_COOP(config.prio), 0, delay);
     }
 
     ~impl()
     {
         abort();
-        k_thread_stack_free(_threadStack);
+        k_thread_stack_free(threadStack);
     }
 
     void abort()
     {
-        k_thread_abort(_threadId);
+        k_thread_abort(threadId);
     }
 
     void join()
     {
-        k_thread_join(&_thread, K_FOREVER);
+        k_thread_join(&thread, K_FOREVER);
         
     }
 
     void suspend()
     {
-        k_thread_suspend(_threadId);
+        k_thread_suspend(threadId);
     }
 
     void resume()
     {
-        k_thread_resume(_threadId);
+        k_thread_resume(threadId);
     }
     
 private:
-    struct k_thread _thread;
-    k_thread_stack_t* _threadStack;
-    k_tid_t _threadId;
-    OS::Thread::Function _function;
+    struct k_thread thread;
+    k_thread_stack_t* threadStack;
+    k_tid_t threadId;
+    OS::Thread::Function threadFunction;
 };
 
 OS::Thread::Thread(OS::Thread::Function function, const OS::Thread::Config& config, const bool autostart)

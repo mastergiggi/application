@@ -57,7 +57,15 @@ west zephyr-export
 ### Install Python packages
 
 ```shell
-pip install -r zephyr/scripts/requirements.txt
+cd ~/zephyr-workspace
+west packages pip --install
+```
+
+### Install Zephyr SDK
+
+```shell
+cd ~/zephyr-workspace/zephyr
+west sdk install
 ```
 
 ### Build the OSAL example application using the command
@@ -67,4 +75,8 @@ cd application/
 west build -p auto -b $BOARD osal-example/
 ```
 
-where `$BOARD` is the target board (e.g. `native_sim` or `nucleo_f303re`).
+where `$BOARD` is the target board (e.g. `native_sim` or `nucleo_g431rb`).
+
+### Development using Visual Studio Code
+
+See `/application/ide/vscode/README.md` for details.

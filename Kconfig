@@ -4,7 +4,7 @@
 # Kconfig entry point defined in zephyr/module.yml
 #
 # Modify options using
-#   west build -t menuconfig app
+#   west build -t menuconfig osal-example
 # from repository root directory.
 #
 # To use (external) modules (e.g. LittleFS, mbedtls, etc.) add them

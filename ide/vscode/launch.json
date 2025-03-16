@@ -2,12 +2,45 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GDB Launch",
+            "name": "Launch Native",
+            "type": "cppdbg",
+            "request": "launch",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/zephyr/zephyr.exe",
-            "request": "launch",
-            "type": "cppdbg",
-            "preLaunchTask": "West Build"
-        }
+        },
+        {
+          "name": "Launch Nucleo-G431RB",
+          "type": "cortex-debug",
+          "request": "launch",
+          "cwd": "${workspaceRoot}",
+          "executable": "build/zephyr/zephyr.elf",
+          "servertype": "openocd",
+          "serverpath": "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/bin/openocd",
+          "configFiles": [
+            "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/interface/stlink.cfg",
+            "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/target/stm32g4x.cfg"],
+          "gdbPath": "${userHome}/zephyr-sdk-0.16.8/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+          "device": "STM32G431RB",
+          "preLaunchTask": "West Flash",
+          "showDevDebugOutput": "raw",
+          "runToEntryPoint": "main"
+          //"svdFile": "${workspaceRoot}/debug-files/STM32F411.svd"
+        },
+        {
+          "name": "Attach Nucleo-G431RB",
+          "type": "cortex-debug",
+          "request": "attach",
+          "cwd": "${workspaceRoot}",
+          "executable": "build/zephyr/zephyr.elf",
+          "servertype": "openocd",
+          "serverpath": "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/bin/openocd",
+          "configFiles": [
+            "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/interface/stlink.cfg",
+            "${userHome}/zephyr-sdk-0.16.8/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/target/stm32g4x.cfg"],
+          "gdbPath": "${userHome}/zephyr-sdk-0.16.8/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+          "device": "STM32G431RB",
+          "showDevDebugOutput": "raw",
+          //"svdFile": "${workspaceRoot}/debug-files/STM32F411.svd"
+        },
     ]
 }

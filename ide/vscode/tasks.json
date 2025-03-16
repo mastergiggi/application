@@ -50,7 +50,7 @@
 				"-p",
 				"auto",
 				"-b",
-				"nucleo_431rb",
+				"nucleo_g431rb",
 				"application/osal-example"
 			],
 			"problemMatcher": [
